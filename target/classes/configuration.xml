@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="mysql" class="com.shalr.spring.depedency_injection.connection.MySQLConnection"/>
+	
+	<bean id="sqlserver" class="com.shalr.spring.depedency_injection.connection.SQLConnection"/>
+	
+	<bean id="computerDAO" class="com.shalr.spring.depedency_injection.dao.ComputerDAOImpl">
+		<constructor-arg ref = "sqlserver"/>
+	</bean>
+
+</beans>
