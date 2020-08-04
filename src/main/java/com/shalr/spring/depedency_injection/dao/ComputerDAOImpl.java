@@ -13,22 +13,33 @@ public class ComputerDAOImpl implements ComputerDAO {
 	
 	private Connection connection = null;
 	private PreparedStatement preparedStatement = null;
-//	private ResultSet resultSet = null;
+	//	private ResultSet resultSet = null;
 	private IConnection connectionDB = null;
 	
 	
-	
+	// You must have no-arg constructor	
 	public ComputerDAOImpl() {
 	}
-
+	
+	// constructor injection	
 	public ComputerDAOImpl(IConnection connectionDB) {
+		this.connectionDB = connectionDB;
+	}
+	
+	public IConnection getConnectionDB() {
+		return connectionDB;
+	}
+	// setter injection 	
+	public void setConnectionDB(IConnection connectionDB) {
 		this.connectionDB = connectionDB;
 	}
 
 	@Override
 	public boolean insertComputer(Computer computer) throws ClassNotFoundException, SQLException {
-		try {
 		String query = "INSERT INTO computer (name, brandName, color, weight, isManufacture) VALUES (?,?,?,?,?)";
+		boolean result = false;
+		try {
+		
 		connection = connectionDB.getConnection();
 		
 		preparedStatement = connection.prepareStatement(query);
@@ -38,7 +49,7 @@ public class ComputerDAOImpl implements ComputerDAO {
 		preparedStatement.setDouble(4, computer.getWeight());
 		preparedStatement.setBoolean(5, computer.isManufacture());
 		
-		return preparedStatement.execute();	
+		result = preparedStatement.executeUpdate() > 0;	
 		
 		}finally{
 			if (preparedStatement != null) {
@@ -48,6 +59,7 @@ public class ComputerDAOImpl implements ComputerDAO {
 				connection.close();
 			}
 		}
+		return result;
 	}
 
 }

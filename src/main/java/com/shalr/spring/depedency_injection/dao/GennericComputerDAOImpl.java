@@ -13,8 +13,6 @@ public class GennericComputerDAOImpl implements Dao<Computer>{
 	private PreparedStatement preparedStatement = null;
 	private IConnection connectionDB = null;
 	
-	
-	
 	public GennericComputerDAOImpl() {
 	}
 	

@@ -1,17 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p = "http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean id="mysql" class="com.shalr.spring.depedency_injection.connection.MySQLConnection"/>
+
+	 <bean id="mysql2" class="com.shalr.spring.depedency_injection.connection.MySQLConnection">
+		<property name="classPath" value="com.mysql.cj.jdbc.Driver"></property>
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/computerDB"></property>
+		<property name="user" value="root"></property>
+		<property name="password" value="Jason199874"></property>
+	</bean>
 	
+	
+	<!-- 
+		Nếu như có quá nhiều value cần inject ta có thể sử dụng p:namespace
+		Phải khai báo prefix p ở đầu tập tin XML
+	 -->
+	 
+	 
+	<bean id="mysql" class="com.shalr.spring.depedency_injection.connection.MySQLConnection"
+		 p:classPath = "com.mysql.cj.jdbc.Driver" p:url  = "jdbc:mysql://127.0.0.1:3306/computerDB"
+		 p:user = "root" p:password = "Jason199874"/>
+
+
 	<bean id="sqlserver" class="com.shalr.spring.depedency_injection.connection.SQLConnection"/>
 	
-	<!-- <bean id="computerDAO" class="com.shalr.spring.depedency_injection.dao.ComputerDAOImpl">
-		<constructor-arg ref = "sqlserver"/>
-	</bean> -->
 	
-	<bean id="computerDAO" class="com.shalr.spring.depedency_injection.dao.GennericComputerDAOImpl">
+	<bean id="computerDAO" class="com.shalr.spring.depedency_injection.dao.ComputerDAOImpl">
+		<!-- <constructor-arg ref = "mysql"/ -->
+		<property name="connectionDB" ref="mysql"></property>
+	</bean>
+	
+	
+	<!-- Bean này cho GennecricComputerDAOImpl that implement Dao interface -->
+	 <bean id="computerDAO2" class="com.shalr.spring.depedency_injection.dao.GennericComputerDAOImpl">
 		<constructor-arg ref = "sqlserver"/>
 	</bean>
 </beans>
