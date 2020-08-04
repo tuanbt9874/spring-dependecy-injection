@@ -7,8 +7,11 @@
 	
 	<bean id="sqlserver" class="com.shalr.spring.depedency_injection.connection.SQLConnection"/>
 	
-	<bean id="computerDAO" class="com.shalr.spring.depedency_injection.dao.ComputerDAOImpl">
+	<!-- <bean id="computerDAO" class="com.shalr.spring.depedency_injection.dao.ComputerDAOImpl">
+		<constructor-arg ref = "sqlserver"/>
+	</bean> -->
+	
+	<bean id="computerDAO" class="com.shalr.spring.depedency_injection.dao.GennericComputerDAOImpl">
 		<constructor-arg ref = "sqlserver"/>
 	</bean>
-
 </beans>
